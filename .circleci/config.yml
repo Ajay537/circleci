@@ -21,9 +21,11 @@ jobs:
 
       - run: echo $SECRET_PASS
 
+       - run: echo $ENVIRONMENT
    
 workflows:
   version: 2.1
   test_versions:
     jobs:
       - intial
+        context: DEVEL
