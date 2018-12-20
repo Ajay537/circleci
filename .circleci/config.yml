@@ -19,11 +19,32 @@ jobs:
     steps:
       - checkout
 
-      - run: ls
+      - run: echo $SECRET_PASS
+      - run: echo "abc"
 
+      - run: echo $ENVIRONMENT
+ 
+  deploy:
+    docker:
+       # specify the version you desire here
+       - image: circleci/node:7.10
+      
+    working_directory: ~/repo
+
+    steps:
+     - add_ssh_keys:
+         fingerprints:
+           - "b0:9e:01:b8:5a:f5:50:fe:a1:fc:99:37:5f:28:40:07"
+           
+     - run:
+          name: Deploy Over SSH
+          command: |
+            ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ec2-user@ec2-3-84-17-136.compute-1.amazonaws.com "echo hi"
    
 workflows:
   version: 2.1
   test_versions:
     jobs:
-      - intial
+      - intial:
+          context: DEVEL
+      - deploy    
