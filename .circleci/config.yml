@@ -27,5 +27,5 @@ workflows:
   version: 2.1
   test_versions:
     jobs:
-      - intial
+      - intial:
           context: DEVEL
